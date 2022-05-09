@@ -1,0 +1,49 @@
+RD="../../../../.."
+WD="data/data/com.termux/files/home"
+TD="storage/termuxsd"
+TX="FileOnExtSdCard.txt"
+ls ~/$RD/storage > storage.txt;
+sed -i -n '/-/p' storage.txt;
+sed -i '/^[[:space:]]*$/d' storage.txt
+file="storage.txt"
+xsd=$(cat "$file")
+echo "----------"
+MicroSD="storage.txt"
+if [ -s "$MicroSD" ]; then
+   echo "Detected MicroSd:  $xsd"
+   sleep 1;
+else
+   echo "MicroSd Card Not Detected"
+   sleep 4 && exit
+fi
+
+DIR=~/$RD/storage/$xsd/termuxsd
+if [ -d "$DIR" ]; then
+   echo "termuxsd exists."
+else
+   echo "Creating Dir"
+   mkdir ~/$RD/storage/$xsd/termuxsd
+fi
+
+LINK=~/$RD/$WD/$TD
+if [ -h "$LINK" ]; then
+   echo "LINK exists."
+else
+   echo "Creating Link"
+   ln -s ~/$RD/storage/$xsd/termuxsd ~/$RD/$WD/$TD
+fi
+FILE=~/$TD/$TX
+if [ -f "$FILE" ]; then
+   echo "1.st FILE exists."
+else
+   echo "Creating 1.st File"
+   echo "1.st" > ~/$TD/$TX
+fi
+rm storage.txt ;
+cd ~/$TD && ls 
+
+echo "🇪‌🇽‌🇹‌🇪‌🇷‌🇳‌🇦‌🇱‌ 🇸‌🇩‌"
+echo "🇱‌🇮‌🇳‌🇰‌🇪‌🇩‌ 🇹‌🇴‌ 🇹‌🇪‌🇷‌🇲‌🇺‌🇽‌"
+echo "For External Sd Folder :"
+echo "type in : "
+echo "cd ~/$TD"
